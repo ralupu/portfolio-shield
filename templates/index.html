@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Shield - Portfolio Protection Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #07111f;
+            --bg2: #0f1b2d;
+            --bg3: #16253c;
+            --panel: rgba(255,255,255,0.04);
+            --gold: #d3a44a;
+            --teal: #52d6be;
+            --coral: #ef7d57;
+            --text: #ecf2ff;
+            --text-dim: #97a8c2;
+            --border: #29405e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(82,214,190,0.16), transparent 28%),
+                radial-gradient(circle at top right, rgba(211,164,74,0.18), transparent 26%),
+                linear-gradient(180deg, #07111f 0%, #0a1322 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 2rem 1.25rem 3rem;
+        }
+
+        .splash-screen {
+            position: relative;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 2rem 1.25rem;
+            overflow: hidden;
+        }
+
+        .splash-screen::before,
+        .splash-screen::after {
+            content: "";
+            position: absolute;
+            inset: auto;
+            border-radius: 999px;
+            filter: blur(24px);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .splash-screen::before {
+            width: min(46vw, 420px);
+            height: min(46vw, 420px);
+            background: radial-gradient(circle, rgba(82,214,190,0.22), transparent 70%);
+            top: 14%;
+            left: 10%;
+        }
+
+        .splash-screen::after {
+            width: min(38vw, 360px);
+            height: min(38vw, 360px);
+            background: radial-gradient(circle, rgba(211,164,74,0.25), transparent 70%);
+            right: 8%;
+            bottom: 12%;
+        }
+
+        .splash-logo-wrap {
+            position: relative;
+            z-index: 1;
+            width: min(1140px, 92vw);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+        }
+
+        .splash-logo {
+            width: min(94vw, 1200px);
+            max-width: 100%;
+            max-height: min(46vw, 460px);
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 28px 48px rgba(0, 0, 0, 0.42));
+        }
+
+        .splash-copy {
+            max-width: 38ch;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        .splash-cta {
+            position: absolute;
+            left: 50%;
+            bottom: 2.1rem;
+            transform: translateX(-50%);
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.95rem 1.35rem;
+            border-radius: 999px;
+            background: rgba(7, 17, 31, 0.64);
+            border: 1px solid rgba(211,164,74,0.45);
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+        }
+
+        .splash-cta:hover {
+            transform: translateX(-50%) translateY(-2px);
+            border-color: rgba(211,164,74,0.7);
+        }
+
+        .splash-cta span {
+            color: var(--gold);
+            font-size: 1.1rem;
+            animation: bounceArrow 1.4s ease-in-out infinite;
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+
+        .planner-shell {
+            padding-top: 1.2rem;
+        }
+
+        .page-brand {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            padding: 1rem 1.2rem;
+            background: rgba(15, 27, 45, 0.82);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+        }
+
+        .page-brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 0.95rem;
+            min-width: 0;
+        }
+
+        .page-brand-logo {
+            width: min(300px, 30vw);
+            min-width: 180px;
+            max-width: 100%;
+            height: auto;
+            flex-shrink: 0;
+            filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.2));
+        }
+
+        .page-brand-copy {
+            min-width: 0;
+        }
+
+        .page-brand-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            letter-spacing: 0.02em;
+        }
+
+        .page-brand-tagline {
+            color: var(--text-dim);
+            font-size: 0.88rem;
+            margin-top: 0.2rem;
+            line-height: 1.45;
+        }
+
+        .page-brand-note {
+            max-width: 28ch;
+            color: var(--text-dim);
+            font-size: 0.82rem;
+            line-height: 1.45;
+            text-align: right;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-main,
+        .hero-side,
+        .card {
+            background: rgba(15, 27, 45, 0.86);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+        }
+
+        .hero-main {
+            padding: 2rem;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(82,214,190,0.12);
+            color: var(--teal);
+            font-size: 0.75rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            line-height: 1.05;
+            color: var(--text);
+            margin-bottom: 0.8rem;
+        }
+
+        .hero-main p {
+            color: var(--text-dim);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 52ch;
+        }
+
+        .hero-side {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .hero-side h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.6rem;
+        }
+
+        .checklist {
+            list-style: none;
+            display: grid;
+            gap: 0.7rem;
+        }
+
+        .checklist li {
+            color: var(--text-dim);
+            font-size: 0.92rem;
+            line-height: 1.45;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--gold);
+            position: absolute;
+            left: 0;
+            top: 0.45rem;
+        }
+
+        .error-box {
+            background: rgba(239,125,87,0.12);
+            border: 1px solid var(--coral);
+            color: var(--coral);
+            border-radius: 14px;
+            padding: 1rem 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .error-box p + p { margin-top: 0.35rem; }
+
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .card {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .card-copy {
+            color: var(--text-dim);
+            font-size: 0.92rem;
+            line-height: 1.55;
+            margin-bottom: 1rem;
+        }
+
+        .positions-header,
+        .position-row {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 0.8fr 1fr 40px;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .positions-header {
+            margin-bottom: 0.55rem;
+        }
+
+        .positions-header span {
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 0.72rem;
+        }
+
+        .position-row + .position-row { margin-top: 0.7rem; }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.8rem 0.9rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg3);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        input[type="number"],
+        .price-display {
+            font-family: 'DM Mono', monospace;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(211,164,74,0.12);
+        }
+
+        .price-display {
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.8rem 0.9rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg3);
+        }
+
+        .price-badge {
+            font-size: 0.74rem;
+            padding: 0.18rem 0.45rem;
+            border-radius: 999px;
+        }
+
+        .price-badge.up { background: rgba(82,214,190,0.14); color: var(--teal); }
+        .price-badge.down { background: rgba(239,125,87,0.14); color: var(--coral); }
+
+        .btn-remove,
+        .btn-add,
+        .btn-secondary,
+        .btn-submit {
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+        }
+
+        .btn-remove {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+
+        .btn-remove:hover,
+        .btn-add:hover { border-color: var(--gold); color: var(--gold); }
+
+        .btn-add {
+            margin-top: 0.9rem;
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: 12px;
+            background: transparent;
+            border: 1px dashed var(--border);
+            color: var(--text-dim);
+        }
+
+        .positions-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .toolbar-copy {
+            color: var(--text-dim);
+            font-size: 0.84rem;
+            line-height: 1.45;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+        }
+
+        .btn-secondary {
+            padding: 0.78rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(22, 37, 60, 0.72);
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-1px);
+            border-color: var(--gold);
+        }
+
+        .settings-grid,
+        .level-grid,
+        .mini-grid,
+        .check-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .check-item {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+            padding: 0.95rem 1rem;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: rgba(22, 37, 60, 0.72);
+        }
+
+        .check-item input[type="checkbox"] {
+            width: auto;
+            margin-top: 0.2rem;
+            accent-color: var(--gold);
+        }
+
+        .check-item label {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        .settings-grid { grid-template-columns: repeat(2, 1fr); }
+        .mini-grid { grid-template-columns: repeat(3, 1fr); }
+        .level-grid { grid-template-columns: repeat(3, 1fr); }
+
+        .level-card {
+            position: relative;
+            padding: 1.1rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            cursor: pointer;
+        }
+
+        .level-card input { position: absolute; opacity: 0; pointer-events: none; }
+        .level-card.selected {
+            border-color: var(--gold);
+            background: linear-gradient(180deg, rgba(211,164,74,0.12), rgba(255,255,255,0.02));
+        }
+
+        .level-pct {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.4rem;
+            color: var(--gold);
+            margin-bottom: 0.35rem;
+        }
+
+        .level-name {
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .level-desc,
+        .hint {
+            color: var(--text-dim);
+            font-size: 0.84rem;
+            line-height: 1.45;
+        }
+
+        .hint { margin-top: 0.6rem; }
+
+        .label-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+        }
+
+        .info-inline {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            border: 1px solid rgba(211,164,74,0.55);
+            background: rgba(211,164,74,0.08);
+            color: var(--gold);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.76rem;
+            font-weight: 700;
+            cursor: help;
+            user-select: none;
+            flex: 0 0 auto;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--gold), #f0b35b);
+            color: #1b1407;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-submit:hover { transform: translateY(-1px); opacity: 0.95; }
+        .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.25rem;
+            color: var(--text-dim);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 820px) {
+            .hero { grid-template-columns: 1fr; }
+            .page-brand {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .page-brand-logo {
+                width: min(360px, 100%);
+                min-width: 0;
+            }
+            .page-brand-note {
+                max-width: none;
+                text-align: left;
+            }
+            .splash-logo-wrap {
+                width: min(980px, 94vw);
+            }
+            h1 { font-size: 2.4rem; }
+            .settings-grid,
+            .level-grid,
+            .mini-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 700px) {
+            .positions-header { display: none; }
+            .position-row {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            .price-cell { grid-column: 1 / -1; }
+            .btn-remove { justify-self: end; }
+            .page-brand-lockup { align-items: flex-start; }
+            .page-brand-logo {
+                width: min(260px, 100%);
+            }
+            .page-brand-name { font-size: 1.08rem; }
+            .page-brand-tagline,
+            .page-brand-note { font-size: 0.82rem; }
+            .splash-logo {
+                width: min(96vw, 720px);
+                max-height: 255px;
+            }
+            .splash-copy {
+                font-size: 0.92rem;
+            }
+            .splash-cta {
+                width: calc(100% - 2.5rem);
+                justify-content: center;
+                text-align: center;
+                bottom: 1.35rem;
+            }
+        }
+    </style>
+</head>
+<body data-start="{% if errors %}planner{% else %}splash{% endif %}">
+    <section class="splash-screen">
+        <div class="splash-logo-wrap">
+            <img
+                src="/static/hedger_logo.png"
+                alt="HEDGER - Portfolio Protection"
+                class="splash-logo"
+                onerror="this.style.display='none'"
+            >
+            <p class="splash-copy">
+                Build a calm, structured hedge plan for your portfolio before risk forces the decision.
+            </p>
+        </div>
+        <button type="button" class="splash-cta" id="open-planner">
+            Let's create your plan
+            <span>↓</span>
+        </button>
+    </section>
+
+    <div class="container planner-shell" id="planner-experience">
+        <div class="page-brand">
+            <div class="page-brand-lockup">
+                <img
+                    src="/static/hedger_logo.png"
+                    alt="HEDGER - Portfolio Protection"
+                    class="page-brand-logo"
+                    onerror="this.style.display='none'"
+                >
+            </div>
+            <div class="page-brand-note">Educational planning only. Review cost, liquidity, and trade suitability before acting.</div>
+        </div>
+        <div class="hero">
+            <section class="hero-main">
+                <div class="eyebrow">Portfolio Protection Planner</div>
+                <h1>Build a protection plan for your stock portfolio.</h1>
+                <p>
+                    This app does not place trades. It reviews your stock holdings, compares hedge approaches,
+                    and suggests options to consider based on your protection goal, budget, and time horizon.
+                </p>
+            </section>
+            <aside class="hero-side">
+                <div>
+                    <h2>What you'll get</h2>
+                    <ul class="checklist">
+                        <li>Portfolio-level protection analysis, not just one stock at a time.</li>
+                        <li>A comparison between single-stock puts and an index hedge for diversified portfolios.</li>
+                        <li>Clear estimates for cost, protection, scenario outcomes, and review timing.</li>
+                    </ul>
+                </div>
+                <p class="hint">For education and planning only. Options involve risk and can lose value quickly.</p>
+            </aside>
+        </div>
+
+        {% if errors %}
+        <div class="error-box">
+            {% for err in errors %}
+            <p>{{ err }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form id="hedge-form" action="/analyze" method="POST">
+            <section class="card">
+                <div class="card-title">Portfolio Holdings</div>
+                <p class="card-copy">Enter the stock positions you want to review. Average cost is optional, but it improves performance context and scenario analysis.</p>
+                <p class="hint">Start typing a ticker or open the dropdown for common symbols.</p>
+                <div class="positions-toolbar">
+                    <div class="toolbar-copy">Use the demo portfolio to load a realistic example and see a full sample analysis in one click.</div>
+                    <div class="toolbar-actions">
+                        <button type="button" class="btn-secondary" onclick="loadDemoPortfolio()">Load Demo Portfolio</button>
+                        <button type="button" class="btn-secondary" onclick="resetPortfolioRows()">Clear Portfolio</button>
+                    </div>
+                </div>
+                <div class="positions-header">
+                    <span class="label-row">Ticker <span class="info-inline" title="The stock symbol you own, such as AAPL or MSFT. The app uses it to pull live prices, history, and options data.">i</span></span>
+                    <span class="label-row">Shares <span class="info-inline" title="How many shares of that stock you currently hold. This sets the size of the exposure the app needs to hedge.">i</span></span>
+                    <span class="label-row">Avg Cost <span class="info-inline" title="Your average purchase price per share. This is optional and is used to show profit and loss context more accurately.">i</span></span>
+                    <span class="label-row">Live Price <span class="info-inline" title="A market quote pulled automatically after you enter a valid ticker. It helps size the hedge and value the position.">i</span></span>
+                    <span></span>
+                </div>
+                <div id="positions-list">
+                    <div class="position-row">
+                        <input type="text" name="ticker" placeholder="AAPL" autocomplete="off" spellcheck="false" class="ticker-input" list="ticker-suggestions">
+                        <input type="number" name="shares" placeholder="100" min="1">
+                        <input type="number" name="avg_cost" placeholder="150.00" min="0" step="0.01">
+                        <div class="price-cell">
+                            <div class="price-display"><span class="price-val">-</span></div>
+                        </div>
+                        <button type="button" class="btn-remove" onclick="removeRow(this)">&times;</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-add" onclick="addRow()">+ Add another position</button>
+            </section>
+
+            <section class="card">
+                <div class="card-title">Protection Target</div>
+                <p class="card-copy">Choose the default hedge intensity. The advisory engine will still compare implementations and explain the trade-off. <span class="info-inline" title="This is your starting hedge strength: light aims for cheaper protection, moderate balances cost and coverage, and tight aims for much stronger downside protection at higher cost.">i</span></p>
+                <div class="level-grid">
+                    <label class="level-card" onclick="selectLevel(this)">
+                        <input type="radio" name="hedge_level" value="light">
+                        <div class="level-pct">25%</div>
+                        <div class="level-name">Light</div>
+                        <div class="level-desc">Lower-cost disaster hedge using further out-of-the-money puts.</div>
+                    </label>
+                    <label class="level-card selected" onclick="selectLevel(this)">
+                        <input type="radio" name="hedge_level" value="moderate" checked>
+                        <div class="level-pct">50%</div>
+                        <div class="level-name">Moderate</div>
+                        <div class="level-desc">Balanced protection that aims to reduce a meaningful share of downside sensitivity.</div>
+                    </label>
+                    <label class="level-card" onclick="selectLevel(this)">
+                        <input type="radio" name="hedge_level" value="full">
+                        <div class="level-pct">100%</div>
+                        <div class="level-name">Tight</div>
+                        <div class="level-desc">Closest-to-full delta coverage using tighter strikes and a higher premium budget.</div>
+                    </label>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-title">Plan Settings</div>
+                <p class="card-copy">These choices shape the recommendation and how it is explained.</p>
+                <div class="settings-grid">
+                    <div>
+                        <label for="objective" class="label-row">Objective <span class="info-inline" title="Tells the app what kind of protection you want. For example, crash protection favors cheaper market hedges, while protect gains can favor tighter coverage.">i</span></label>
+                        <select id="objective" name="objective">
+                            <option value="reduce_downside">Reduce 1-3 month downside</option>
+                            <option value="protect_gains">Protect recent gains</option>
+                            <option value="crash_hedge">Crash hedge only</option>
+                            <option value="partial_delta">Partial delta hedge</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="experience" class="label-row">Options experience <span class="info-inline" title="This does not change your broker permissions, but it changes how conservative the warnings and explanations should be.">i</span></label>
+                        <select id="experience" name="experience">
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="options_approval" class="label-row">Options approval status <span class="info-inline" title="Use this to tell the app whether your brokerage account is approved for options. If not, the result should be treated as research only.">i</span></label>
+                        <select id="options_approval" name="options_approval">
+                            <option value="unsure">Unsure</option>
+                            <option value="yes">Approved</option>
+                            <option value="no">Not approved</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mini-grid" style="margin-top:1rem;">
+                    <div>
+                        <label for="horizon_days" class="label-row">Hedge horizon (days) <span class="info-inline" title="How long you want the current protection plan to last before it is naturally reviewed or replaced. It helps choose the option expiry window.">i</span></label>
+                        <input id="horizon_days" type="number" name="horizon_days" value="45" min="21" max="90">
+                    </div>
+                    <div>
+                        <label for="max_budget" class="label-row">Max premium budget ($) <span class="info-inline" title="The most you are willing to spend upfront on hedge premiums right now. Enter 0 if you want the app to evaluate without a hard dollar cap.">i</span></label>
+                        <input id="max_budget" type="number" name="max_budget" value="0" min="0" step="1">
+                    </div>
+                    <div>
+                        <label for="move_threshold_pct" class="label-row">Move threshold (%) <span class="info-inline" title="If the portfolio moves by at least this percentage, the app will tell you the hedge should be reviewed because delta exposure may have changed.">i</span></label>
+                        <input id="move_threshold_pct" type="number" name="move_threshold_pct" value="5" min="1" max="25" step="0.5">
+                    </div>
+                </div>
+                <div class="mini-grid" style="margin-top:1rem;">
+                    <div>
+                        <label for="review_frequency_days" class="label-row">Review frequency (days) <span class="info-inline" title="Even if markets are quiet, the app will suggest checking the hedge this often because time decay and portfolio drift can change protection quality.">i</span></label>
+                        <input id="review_frequency_days" type="number" name="review_frequency_days" value="14" min="1" max="60">
+                    </div>
+                    <div>
+                        <label for="min_days_to_roll" class="label-row">Roll warning below DTE <span class="info-inline" title="DTE means days to expiry. When the hedge gets close to this number of days remaining, the app starts treating it as a candidate to roll into a fresh contract.">i</span></label>
+                        <input id="min_days_to_roll" type="number" name="min_days_to_roll" value="21" min="1" max="60">
+                    </div>
+                    <div>
+                        <label for="sizing_underlying" class="label-row">Reference ETF for sizing <span class="info-inline" title="This is the market proxy used for the reference hedge estimate. For diversified U.S. portfolios, SPY is often the default choice.">i</span></label>
+                        <select id="sizing_underlying" name="sizing_underlying">
+                            <option value="SPY">SPY</option>
+                            <option value="QQQ">QQQ</option>
+                            <option value="IWM">IWM</option>
+                            <option value="DIA">DIA</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mini-grid" style="margin-top:1rem;">
+                    <div style="grid-column: 1 / -1;">
+                        <div class="hint">
+                            These settings determine when the app suggests reviewing or rolling the hedge, and which ETF is used for the reference hedge estimate.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-title">Disclosures and Confirmations</div>
+                <p class="card-copy">These confirmations are required because the app provides guidance only and options can still lose money even when they are used for protection.</p>
+                <div class="check-grid">
+                    <div class="check-item">
+                        <input id="ack_advisory" type="checkbox" name="ack_advisory" value="yes" required>
+                        <label for="ack_advisory">I understand this app gives research and guidance only. It does not execute trades and it does not guarantee portfolio protection. <span class="info-inline" title="This app is not a broker and cannot place trades. Its role is to help you understand possible hedges and when they may need review.">i</span></label>
+                    </div>
+                    <div class="check-item">
+                        <input id="ack_options_risk" type="checkbox" name="ack_options_risk" value="yes" required>
+                        <label for="ack_options_risk">I understand options can lose value quickly, spreads can be wide, and any hedge recommendation should be reviewed before taking action. <span class="info-inline" title="A hedge can reduce downside risk, but it still costs money and may not behave perfectly. This confirmation makes sure the recommendation is not mistaken for a guaranteed outcome.">i</span></label>
+                    </div>
+                </div>
+            </section>
+
+            <button type="submit" class="btn-submit" id="submit-btn">Generate Protection Plan</button>
+        </form>
+
+        <datalist id="ticker-suggestions">
+            <option value="AAPL"></option>
+            <option value="MSFT"></option>
+            <option value="NVDA"></option>
+            <option value="AMZN"></option>
+            <option value="GOOGL"></option>
+            <option value="META"></option>
+            <option value="TSLA"></option>
+            <option value="NFLX"></option>
+            <option value="AMD"></option>
+            <option value="AVGO"></option>
+            <option value="PLTR"></option>
+            <option value="JPM"></option>
+            <option value="BAC"></option>
+            <option value="XOM"></option>
+            <option value="CVX"></option>
+            <option value="UNH"></option>
+            <option value="LLY"></option>
+            <option value="BRK.B"></option>
+            <option value="SPY"></option>
+            <option value="QQQ"></option>
+            <option value="IWM"></option>
+            <option value="DIA"></option>
+        </datalist>
+
+        <div class="footer">
+            Portfolio Shield provides planning guidance only. It does not execute trades and does not guarantee protection.
+        </div>
+    </div>
+
+    <script>
+        const DEMO_PORTFOLIO = [
+            { ticker: 'AAPL', shares: 120, avgCost: 171.40 },
+            { ticker: 'MSFT', shares: 55, avgCost: 338.20 },
+            { ticker: 'NVDA', shares: 35, avgCost: 118.80 },
+            { ticker: 'JPM', shares: 40, avgCost: 182.10 }
+        ];
+        const plannerExperience = document.getElementById('planner-experience');
+
+        function openPlanner(event, behavior = 'smooth') {
+            if (event) {
+                event.preventDefault();
+            }
+            document.body.classList.add('planner-open');
+            plannerExperience.scrollIntoView({ behavior, block: 'start' });
+        }
+
+        document.getElementById('open-planner').addEventListener('click', (event) => openPlanner(event));
+
+        if (document.body.dataset.start === 'planner') {
+            requestAnimationFrame(() => openPlanner(null, 'auto'));
+        }
+
+        function createPositionRow(position = {}) {
+            const ticker = position.ticker || '';
+            const shares = position.shares || '';
+            const avgCost = position.avgCost || '';
+            const row = document.createElement('div');
+            row.className = 'position-row';
+            row.innerHTML = `
+                <input type="text" name="ticker" placeholder="MSFT" value="${ticker}" autocomplete="off" spellcheck="false" class="ticker-input" list="ticker-suggestions">
+                <input type="number" name="shares" placeholder="50" value="${shares}" min="1">
+                <input type="number" name="avg_cost" placeholder="280.00" value="${avgCost}" min="0" step="0.01">
+                <div class="price-cell">
+                    <div class="price-display"><span class="price-val">-</span></div>
+                </div>
+                <button type="button" class="btn-remove" onclick="removeRow(this)">&times;</button>
+            `;
+            bindTickerEvents(row.querySelector('.ticker-input'));
+            return row;
+        }
+
+        function addRow() {
+            const list = document.getElementById('positions-list');
+            list.appendChild(createPositionRow());
+        }
+
+        function removeRow(btn) {
+            const list = document.getElementById('positions-list');
+            if (list.children.length > 1) {
+                btn.closest('.position-row').remove();
+            }
+        }
+
+        function resetPortfolioRows() {
+            const list = document.getElementById('positions-list');
+            list.innerHTML = '';
+            list.appendChild(createPositionRow());
+        }
+
+        function loadDemoPortfolio() {
+            const list = document.getElementById('positions-list');
+            list.innerHTML = '';
+            DEMO_PORTFOLIO.forEach(position => {
+                const row = createPositionRow(position);
+                list.appendChild(row);
+                fetchPrice(row.querySelector('.ticker-input'));
+            });
+
+            document.getElementById('objective').value = 'reduce_downside';
+            document.getElementById('experience').value = 'beginner';
+            document.getElementById('options_approval').value = 'yes';
+            document.getElementById('horizon_days').value = 45;
+            document.getElementById('max_budget').value = 2500;
+            document.getElementById('move_threshold_pct').value = 5;
+            document.getElementById('review_frequency_days').value = 14;
+            document.getElementById('min_days_to_roll').value = 21;
+            document.getElementById('sizing_underlying').value = 'SPY';
+            document.getElementById('ack_advisory').checked = true;
+            document.getElementById('ack_options_risk').checked = true;
+
+            const moderateCard = document.querySelector('.level-card input[value="moderate"]').closest('.level-card');
+            if (moderateCard) {
+                selectLevel(moderateCard);
+            }
+        }
+
+        function selectLevel(card) {
+            document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            card.querySelector('input[type="radio"]').checked = true;
+        }
+
+        function bindTickerEvents(input) {
+            input.addEventListener('blur', () => fetchPrice(input));
+            input.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    fetchPrice(input);
+                }
+            });
+        }
+
+        function fetchPrice(input) {
+            const ticker = input.value.trim().toUpperCase();
+            if (!ticker) return;
+            input.value = ticker;
+            const priceDisplay = input.closest('.position-row').querySelector('.price-display');
+            priceDisplay.innerHTML = '<span class="price-val" style="color:var(--text-dim)">Loading price...</span>';
+
+            fetch(`/api/quote/${encodeURIComponent(ticker)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        priceDisplay.innerHTML = '<span class="price-val" style="color:var(--coral)">Price unavailable</span>';
+                        return;
+                    }
+                    const dir = data.change >= 0 ? 'up' : 'down';
+                    const sign = data.change >= 0 ? '+' : '';
+                    priceDisplay.innerHTML = `
+                        <span class="price-val">$${data.price.toFixed(2)}</span>
+                        <span class="price-badge ${dir}">${sign}${data.change_pct.toFixed(1)}%</span>
+                    `;
+                })
+                .catch(() => {
+                    priceDisplay.innerHTML = '<span class="price-val" style="color:var(--coral)">Price error</span>';
+                });
+        }
+
+        document.querySelectorAll('.ticker-input').forEach(bindTickerEvents);
+
+        document.getElementById('hedge-form').addEventListener('submit', (event) => {
+            const tickers = document.querySelectorAll('input[name="ticker"]');
+            let hasValid = false;
+            tickers.forEach(input => {
+                if (input.value.trim()) {
+                    hasValid = true;
+                }
+            });
+            if (!hasValid) {
+                event.preventDefault();
+                alert('Enter at least one ticker.');
+                return;
+            }
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Building your plan...';
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+

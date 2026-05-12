@@ -1,0 +1,805 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Shield - Protection Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #07111f;
+            --bg2: #0f1b2d;
+            --bg3: #16253c;
+            --gold: #d3a44a;
+            --teal: #52d6be;
+            --coral: #ef7d57;
+            --text: #ecf2ff;
+            --text-dim: #97a8c2;
+            --border: #29405e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(82,214,190,0.14), transparent 26%),
+                radial-gradient(circle at top right, rgba(211,164,74,0.16), transparent 26%),
+                linear-gradient(180deg, #07111f 0%, #091423 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.75rem 1.25rem 3rem;
+        }
+
+        .header,
+        .banner,
+        .card,
+        .metric,
+        .summary-chip {
+            background: rgba(15, 27, 45, 0.88);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+        }
+
+        .header {
+            padding: 1.2rem 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 0.95rem;
+            min-width: 0;
+        }
+
+        .brand-logo {
+            width: min(300px, 30vw);
+            min-width: 180px;
+            max-width: 100%;
+            height: auto;
+            flex-shrink: 0;
+            filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.2));
+        }
+
+        .brand-copy {
+            min-width: 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            text-decoration: none;
+            margin-left: auto;
+            margin-right: 3.3rem;
+        }
+
+        .back-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .banner {
+            padding: 1.4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, rgba(211,164,74,0.16), rgba(82,214,190,0.07));
+        }
+
+        .banner h2 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .banner p {
+            color: var(--text-dim);
+            line-height: 1.6;
+            max-width: 72ch;
+        }
+
+        .banner-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .summary-stack {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .summary-chip {
+            padding: 0.95rem 1rem;
+            background: rgba(7, 17, 31, 0.4);
+        }
+
+        .summary-chip .label {
+            color: var(--text-dim);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-chip .value {
+            font-family: 'DM Mono', monospace;
+            font-size: 1rem;
+        }
+
+        .callouts {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric .label {
+            color: var(--text-dim);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.35rem;
+        }
+
+        .metric .value {
+            font-family: 'DM Mono', monospace;
+            font-size: 1.3rem;
+        }
+
+        .metric .sub {
+            color: var(--text-dim);
+            font-size: 0.78rem;
+            margin-top: 0.25rem;
+            line-height: 1.45;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab-btn {
+            border: 1px solid var(--border);
+            background: rgba(15, 27, 45, 0.88);
+            color: var(--text-dim);
+            padding: 0.75rem 1.05rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card {
+            padding: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.25rem;
+            color: var(--gold);
+            margin-bottom: 0.9rem;
+        }
+
+        .card-copy {
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .grid-two {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-dim);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.65rem 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 0.75rem 0.5rem;
+            border-bottom: 1px solid rgba(41,64,94,0.45);
+            font-size: 0.9rem;
+            vertical-align: top;
+        }
+
+        td.mono,
+        .mono {
+            font-family: 'DM Mono', monospace;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .pill {
+            display: inline-block;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            background: rgba(82,214,190,0.12);
+            color: var(--teal);
+        }
+
+        .warning-list,
+        .steps,
+        .notes {
+            display: grid;
+            gap: 0.7rem;
+        }
+
+        .warning,
+        .step,
+        .note {
+            padding: 0.9rem 1rem;
+            border-radius: 14px;
+            background: rgba(22,37,60,0.72);
+            border: 1px solid rgba(41,64,94,0.75);
+            color: var(--text-dim);
+            line-height: 1.55;
+        }
+
+        .warning {
+            border-color: rgba(239,125,87,0.45);
+            color: #ffc9b8;
+        }
+
+        .scenario-good { color: var(--teal); }
+        .scenario-bad { color: var(--coral); }
+
+        .legend-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem 1rem;
+            margin-top: 1rem;
+        }
+
+        .toolbar-inline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.9rem;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .toolbar-inline .copy {
+            color: var(--text-dim);
+            font-size: 0.86rem;
+            line-height: 1.5;
+            max-width: 56ch;
+        }
+
+        .legend-item {
+            display: flex;
+            gap: 0.45rem;
+            align-items: center;
+            color: var(--text-dim);
+            font-size: 0.84rem;
+        }
+
+        .legend-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 4px;
+        }
+
+        .chart-wrap { overflow-x: auto; }
+        .chart-svg { display: block; width: 100%; height: auto; }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.2rem;
+            color: var(--text-dim);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        .results-meta-footer {
+            text-align: center;
+            margin-top: 0.45rem;
+            color: var(--text-dim);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 960px) {
+            .banner-grid,
+            .grid-two,
+            .callouts { grid-template-columns: 1fr; }
+            .callouts { display: grid; }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .brand-logo {
+                width: min(260px, 100%);
+                min-width: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="brand-lockup">
+                <img
+                    src="/static/hedger_logo.png"
+                    alt="HEDGER - Portfolio Protection"
+                    class="brand-logo"
+                    onerror="this.style.display='none'"
+                >
+            </div>
+            <a href="/" class="back-link">New analysis</a>
+        </div>
+
+        <section class="banner">
+            <div class="banner-grid">
+                <div>
+                    <div class="pill">{{ recommendation.strategy_label }}</div>
+                    <h2>{{ recommendation.objective_label }}</h2>
+                    <p>{{ recommendation.rationale }}</p>
+                    {% if recommendation.errors %}
+                    <div class="warning-list" style="margin-top:1rem;">
+                        {% for err in recommendation.errors %}
+                        <div class="warning">{{ err }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="summary-stack">
+                    <div class="summary-chip">
+                        <div class="label">Next Review</div>
+                        <div class="value">{{ recommendation.review_date }}</div>
+                    </div>
+                    <div class="summary-chip">
+                        <div class="label">Experience Level</div>
+                        <div class="value">{{ profile.experience | capitalize }}</div>
+                    </div>
+                    <div class="summary-chip">
+                        <div class="label">Options Approval</div>
+                        <div class="value">{{ profile.options_approval | capitalize }}</div>
+                    </div>
+                    <div class="summary-chip">
+                        <div class="label">Budget Entered</div>
+                        <div class="value">{% if profile.max_budget > 0 %}${{ "{:,.0f}".format(profile.max_budget) }}{% else %}No cap{% endif %}</div>
+                    </div>
+                    <div class="summary-chip">
+                        <div class="label">Policy</div>
+                        <div class="value">{{ recommendation.policy_config.move_threshold_pct }}% / {{ recommendation.policy_config.review_frequency_days }}d</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% if recommendation.gate_warnings %}
+        <section class="card">
+            <div class="card-title">Important Notes</div>
+            <div class="warning-list">
+                <div class="warning"><strong>{{ recommendation.readiness_label }}</strong>: this plan should be treated as guidance and reviewed carefully before any trade decision.</div>
+                {% for warning in recommendation.gate_warnings %}
+                <div class="warning">{{ warning }}</div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <section class="callouts">
+            <div class="metric">
+                <div class="label">Portfolio Value</div>
+                <div class="value">${{ "{:,.0f}".format(performance.current_value) }}</div>
+                <div class="sub">Current portfolio value</div>
+            </div>
+            <div class="metric">
+                <div class="label">Hedge Cost</div>
+                <div class="value">${{ "{:,.0f}".format(recommendation.total_cost) }}</div>
+                <div class="sub">{{ recommendation.total_cost_pct }}% of the portfolio</div>
+            </div>
+            <div class="metric">
+                <div class="label">Target Protection</div>
+                <div class="value">{{ recommendation.target_delta_reduction_pct | int }}%</div>
+                <div class="sub">Selected coverage target</div>
+            </div>
+            <div class="metric">
+                <div class="label">Estimated Coverage</div>
+                <div class="value">{{ recommendation.market_delta_coverage_pct }}%</div>
+                <div class="sub">Estimated share of market risk covered</div>
+            </div>
+            <div class="metric">
+                <div class="label">Remaining Exposure</div>
+                <div class="value">{{ recommendation.residual_delta_pct }}%</div>
+                <div class="sub">Estimated exposure left after the hedge</div>
+            </div>
+        </section>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('recommendation', this)">Recommendation</button>
+            <button class="tab-btn" onclick="switchTab('overview', this)">Portfolio Overview</button>
+        </div>
+
+        <div id="tab-recommendation" class="tab-content active">
+            <div class="grid-two">
+                <section class="card">
+                    <div class="card-title">Recommended Contracts</div>
+                    <p class="card-copy">These are the contracts selected after comparing protection style, time horizon, and budget.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Underlying</th>
+                                <th>Contracts</th>
+                                <th>Strike</th>
+                                <th>Expiry</th>
+                                <th>Delta</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for leg in recommendation.contracts %}
+                            <tr>
+                                <td>{{ leg.underlying }}</td>
+                                <td class="mono">{{ leg.contracts }}</td>
+                                <td class="mono">${{ "%.2f"|format(leg.strike) }}</td>
+                                <td class="mono">{{ leg.expiry }}</td>
+                                <td class="mono">{{ "%.3f"|format(leg.delta) }}</td>
+                                <td class="mono">${{ "{:,.0f}".format(leg.cost) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="card">
+                    <div class="card-title">Why This Plan Fits</div>
+                    <div class="notes">
+                        <div class="note">{{ recommendation.rationale }}</div>
+                        <div class="note">{{ recommendation.policy_summary }}</div>
+                        <div class="note">Next review window: about {{ recommendation.review_window_days }} days, or sooner if the portfolio or market moves sharply.</div>
+                        <div class="note">{{ recommendation.experience_warning }}</div>
+                    </div>
+                    {% if recommendation.alternatives %}
+                    <div style="margin-top:1rem;">
+                        <div class="card-title" style="font-size:1.05rem;margin-bottom:0.7rem;">Other Options Considered</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Strategy</th>
+                                    <th>Cost %</th>
+                                    <th>Coverage %</th>
+                                    <th>Comparison Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for alt in recommendation.alternatives %}
+                                <tr>
+                                    <td>{{ alt.strategy }}</td>
+                                    <td class="mono">{{ "%.2f"|format(alt.cost_pct) }}%</td>
+                                    <td class="mono">{{ alt.coverage_pct }}%</td>
+                                    <td class="mono">{{ alt.score }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                </section>
+            </div>
+
+            <section class="card">
+                <div class="card-title">Reference Hedge Estimate</div>
+                <p class="card-copy">This view estimates how many units of the reference ETF would offset the portfolio's current net delta.</p>
+                <div class="notes">
+                    <div class="note">Current portfolio net delta: <span class="mono">{{ recommendation.neutralization_estimate.current_net_delta }}</span></div>
+                    <div class="note">Current hedge delta already in the portfolio: <span class="mono">{{ recommendation.neutralization_estimate.existing_hedge_delta }}</span></div>
+                    <div class="note">Suggested action in <span class="mono">{{ recommendation.neutralization_estimate.hedge_underlying }}</span>: <strong>{{ recommendation.neutralization_estimate.action | upper }}</strong> <span class="mono">{{ recommendation.neutralization_estimate.required_units_rounded }}</span> units</div>
+                    <div class="note">Estimated post-trade net delta after that rounded hedge: <span class="mono">{{ recommendation.neutralization_estimate.estimated_post_trade_delta }}</span></div>
+                </div>
+            </section>
+
+            {% if svg.scenario_chart.has_data %}
+            <section class="card">
+                <div class="card-title">Scenario Impact: Unhedged vs Hedged</div>
+                <p class="card-copy">Each bar shows how much the portfolio gains or loses relative to today's value. In down markets, the gap between the bars shows the protection provided by the hedge. In rising markets, the main drag is the premium paid ({{ svg.scenario_chart.total_cost }}).</p>
+                <div class="chart-wrap">
+                    <svg class="chart-svg" viewBox="0 0 {{ svg.scenario_chart.ch_w }} {{ svg.scenario_chart.ch_h }}" preserveAspectRatio="xMidYMid meet">
+                        <rect x="{{ svg.scenario_chart.plot_x }}" y="{{ svg.scenario_chart.plot_y }}" width="{{ svg.scenario_chart.plot_w }}" height="{{ svg.scenario_chart.plot_h }}" fill="var(--bg3)" rx="6"></rect>
+                        {% for xl in svg.scenario_chart.axis_labels %}
+                        <line x1="{{ xl.x }}" y1="{{ svg.scenario_chart.plot_y }}" x2="{{ xl.x }}" y2="{{ svg.scenario_chart.plot_y + svg.scenario_chart.plot_h }}" stroke="var(--border)" stroke-width="0.5" opacity="0.45"></line>
+                        <text x="{{ xl.x }}" y="{{ svg.scenario_chart.plot_y + svg.scenario_chart.plot_h + 20 }}" text-anchor="middle" fill="var(--text-dim)" font-family="DM Mono, monospace" font-size="9">{{ xl.label }}</text>
+                        {% endfor %}
+                        <line x1="{{ svg.scenario_chart.current_x }}" y1="{{ svg.scenario_chart.plot_y }}" x2="{{ svg.scenario_chart.current_x }}" y2="{{ svg.scenario_chart.plot_y + svg.scenario_chart.plot_h }}" stroke="var(--text)" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.7"></line>
+                        {% for row in svg.scenario_chart.rows %}
+                        <text x="{{ svg.scenario_chart.plot_x - 10 }}" y="{{ row.cy }}" text-anchor="end" dominant-baseline="central" fill="var(--text)" font-size="12" font-weight="500">{{ row.label }}</text>
+                        <rect x="{{ row.unhedged_bar_x }}" y="{{ row.unhedged_bar_y }}" width="{{ row.unhedged_bar_w }}" height="{{ row.bar_h }}" rx="4" fill="#ef7d57" opacity="0.85"></rect>
+                        <rect x="{{ row.hedged_bar_x }}" y="{{ row.hedged_bar_y }}" width="{{ row.hedged_bar_w }}" height="{{ row.bar_h }}" rx="4" fill="#52d6be" opacity="0.85"></rect>
+                        <text x="{{ row.unhedged_label_x }}" y="{{ row.unhedged_bar_y }}" dy="{{ row.bar_h|float / 2 }}" text-anchor="{{ row.unhedged_label_anchor }}" dominant-baseline="central" fill="#ef7d57" font-family="DM Mono, monospace" font-size="10">{{ row.unhedged_label }}</text>
+                        <text x="{{ row.hedged_label_x }}" y="{{ row.hedged_bar_y }}" dy="{{ row.bar_h|float / 2 }}" text-anchor="{{ row.hedged_label_anchor }}" dominant-baseline="central" fill="#52d6be" font-family="DM Mono, monospace" font-size="10">{{ row.hedged_label }}</text>
+                        {% endfor %}
+                    </svg>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-item"><span class="legend-dot" style="background:var(--text-dim)"></span>Dashed line: current value {{ svg.scenario_chart.current_label }}</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#ef7d57"></span>Coral: unhedged</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#52d6be"></span>Teal: hedged</div>
+                </div>
+            </section>
+            {% endif %}
+
+            <section class="card">
+                <div class="card-title">Scenario Breakdown</div>
+                <p class="card-copy">Option values are estimated using an options-pricing model with time remaining to expiry. Hedge Net shows the value added by the hedge after premium cost: positive in selloffs, negative in mild or positive markets.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shock</th>
+                            <th>Unhedged</th>
+                            <th>Option Value</th>
+                            <th>Hedged</th>
+                            <th>Hedge Net</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in recommendation.scenarios %}
+                        <tr>
+                            <td class="mono">{{ row.label }}</td>
+                            <td class="mono">${{ "{:,.0f}".format(row.unhedged_value) }}</td>
+                            <td class="mono">${{ "{:,.0f}".format(row.option_value) }}</td>
+                            <td class="mono">${{ "{:,.0f}".format(row.hedged_value) }}</td>
+                            <td class="mono {{ 'scenario-good' if row.hedge_net >= 0 else 'scenario-bad' }}">{{ '+' if row.hedge_net >= 0 else '' }}${{ "{:,.0f}".format(row.hedge_net) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="notes" style="margin-top:0.75rem;">
+                    <div class="note">Premium paid: <span class="mono">${{ "{:,.0f}".format(recommendation.total_cost) }}</span>. The hedge starts to pay for itself once option value rises above the premium, which often happens only in larger drawdowns.</div>
+                </div>
+            </section>
+
+            <div class="grid-two">
+                <section class="card">
+                    <div class="card-title">Review Triggers</div>
+                    <div class="steps">
+                        {% for trigger in recommendation.rebalance_triggers %}
+                        <div class="step">{{ trigger }}</div>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-title">Suitability Notes</div>
+                    <div class="warning-list">
+                        {% if recommendation.suitability_notes %}
+                            {% for note in recommendation.suitability_notes %}
+                            <div class="warning">{{ note }}</div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="note">No additional suitability concerns were flagged.</div>
+                        {% endif %}
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div id="tab-overview" class="tab-content">
+            <div class="grid-two">
+                <section class="card">
+                    <div class="card-title">Portfolio Snapshot</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticker</th>
+                                <th>Shares</th>
+                                <th>Avg Cost</th>
+                                <th>Live Price</th>
+                                <th>P&amp;L</th>
+                                <th>Weight</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pos in performance.positions %}
+                            <tr>
+                                <td>{{ pos.ticker }}</td>
+                                <td class="mono">{{ pos.shares }}</td>
+                                <td class="mono">${{ "%.2f"|format(pos.avg_cost) }}</td>
+                                <td class="mono">${{ "%.2f"|format(pos.live_price) }}</td>
+                                <td class="mono {{ 'scenario-good' if pos.pnl >= 0 else 'scenario-bad' }}">{{ '+' if pos.pnl >= 0 else '' }}${{ "{:,.0f}".format(pos.pnl) }}</td>
+                                <td class="mono">{{ pos.weight }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="notes" style="margin-top:1rem;">
+                        {% if svg.fan.has_data %}
+                        <div class="note">95% downside comparison versus unhedged: hold <span class="mono">{{ svg.fan.hold_downside_delta }}</span>, rolling <span class="mono">{{ svg.fan.rolling_downside_delta }}</span>. Positive values mean better protection in the downside tail.</div>
+                        <div class="note">Median outcome comparison versus unhedged: hold <span class="mono">{{ svg.fan.hold_median_drag }}</span>, rolling <span class="mono">{{ svg.fan.rolling_median_drag }}</span>. Negative values mean premium and rolling costs weigh on the central path.</div>
+                        {% elif svg.fan.warnings %}
+                        {% for warning in svg.fan.warnings %}
+                        <div class="warning">{{ warning }}</div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="note">Cost basis: <span class="mono">${{ "{:,.0f}".format(performance.cost_basis) }}</span></div>
+                        <div class="note">Current value: <span class="mono">${{ "{:,.0f}".format(performance.current_value) }}</span></div>
+                        <div class="note">Portfolio beta: <span class="mono">{% if portfolio_beta.portfolio_beta is not none %}{{ "%.2f"|format(portfolio_beta.portfolio_beta) }}{% else %}N/A{% endif %}</span></div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-title">Portfolio Mix</div>
+                    {% if svg.pie_live %}
+                    <svg viewBox="-1.3 -1.3 2.6 2.6" width="220" height="220" style="display:block;margin:0 auto;">
+                        {% for s in svg.pie_live %}
+                        <path d="{{ s.path }}" fill="{{ s.color }}" stroke="var(--bg2)" stroke-width="0.03">
+                            <title>{{ s.ticker }}: {{ s.pct }}%</title>
+                        </path>
+                        {% if s.show_label %}
+                        <text x="{{ s.label_x }}" y="{{ s.label_y }}" text-anchor="middle" dominant-baseline="central" fill="#07111f" font-size="0.13" font-family="DM Sans, sans-serif" font-weight="700">{{ s.ticker }}</text>
+                        {% endif %}
+                        {% endfor %}
+                    </svg>
+                    <div class="legend-row">
+                        {% for pos in performance.positions %}
+                        <div class="legend-item">
+                            <span class="legend-dot" style="background:{{ svg.palette[loop.index0 % svg.palette|length] }}"></span>
+                            {{ pos.ticker }} {{ pos.weight }}%
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="note">Allocation details are not available for the current portfolio.</div>
+                    {% endif %}
+                </section>
+            </div>
+
+            {% if svg.chart.has_data %}
+            <section class="card">
+                <div class="card-title">Portfolio History (1 Year)</div>
+                <div class="chart-wrap">
+                    <svg class="chart-svg" viewBox="0 0 {{ svg.chart.ch_w }} {{ svg.chart.ch_h }}" preserveAspectRatio="xMidYMid meet">
+                        <rect x="{{ svg.chart.plot_x }}" y="{{ svg.chart.plot_y }}" width="{{ svg.chart.plot_w }}" height="{{ svg.chart.plot_h }}" fill="var(--bg3)" rx="6"></rect>
+                        {% for yl in svg.chart.y_labels %}
+                        <line x1="{{ svg.chart.plot_x }}" y1="{{ yl.y }}" x2="{{ svg.chart.plot_x + svg.chart.plot_w }}" y2="{{ yl.y }}" stroke="var(--border)" stroke-width="0.5" opacity="0.5"></line>
+                        <text x="{{ svg.chart.plot_x - 8 }}" y="{{ yl.y }}" text-anchor="end" dominant-baseline="central" fill="var(--text-dim)" font-family="DM Mono, monospace" font-size="9">{{ yl.label }}</text>
+                        {% endfor %}
+                        {% if svg.chart.cb_in_range %}
+                        <line x1="{{ svg.chart.plot_x }}" y1="{{ svg.chart.cb_y }}" x2="{{ svg.chart.plot_x + svg.chart.plot_w }}" y2="{{ svg.chart.cb_y }}" stroke="var(--text-dim)" stroke-width="1" stroke-dasharray="6,4"></line>
+                        {% endif %}
+                        <polyline points="{{ svg.chart.points }}" fill="none" stroke="var(--gold)" stroke-width="2.3" stroke-linejoin="round"></polyline>
+                        <circle cx="{{ svg.chart.last_x }}" cy="{{ svg.chart.last_y }}" r="4" fill="var(--gold)"></circle>
+                        {% for xl in svg.chart.x_labels %}
+                        <text x="{{ xl.x }}" y="{{ svg.chart.plot_y + svg.chart.plot_h + 18 }}" text-anchor="middle" fill="var(--text-dim)" font-family="DM Mono, monospace" font-size="9">{{ xl.label }}</text>
+                        {% endfor %}
+                        {% for hp in svg.chart.hover_points %}
+                        <circle cx="{{ hp.x }}" cy="{{ hp.y }}" r="6" fill="transparent"><title>{{ hp.date }}: ${{ hp.value }}</title></circle>
+                        {% endfor %}
+                    </svg>
+                </div>
+                {% if portfolio_history.warnings %}
+                <div class="warning-list" style="margin-top:1rem;">
+                    {% for warning in portfolio_history.warnings %}
+                    <div class="warning">{{ warning }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </section>
+            {% endif %}
+
+            {% if svg.fan.has_data %}
+            <section class="card">
+                <div class="card-title">Portfolio Tunnel Chart ({{ svg.fan.horizon_days }} Days)</div>
+                <div class="toolbar-inline">
+                    <div class="copy">This chart shows the portfolio's recent path and a forward 95% confidence range starting exactly from the current portfolio value.</div>
+                </div>
+                <p class="card-copy">The gold line is recent portfolio history. From `Now` onward, the coral tunnel shows the unhedged range and the teal tunnel shows the hedged range under the same simulated market paths.</p>
+                <div class="chart-wrap">
+                    <svg class="chart-svg" viewBox="0 0 {{ svg.fan.fan_chart.ch_w }} {{ svg.fan.fan_chart.ch_h }}" preserveAspectRatio="xMidYMid meet">
+                        <rect x="{{ svg.fan.fan_chart.plot_x }}" y="{{ svg.fan.fan_chart.plot_y }}" width="{{ svg.fan.fan_chart.plot_w }}" height="{{ svg.fan.fan_chart.plot_h }}" fill="var(--bg3)" rx="6"></rect>
+                        {% for yl in svg.fan.fan_chart.y_labels %}
+                        <line x1="{{ svg.fan.fan_chart.plot_x }}" y1="{{ yl.y }}" x2="{{ svg.fan.fan_chart.plot_x + svg.fan.fan_chart.plot_w }}" y2="{{ yl.y }}" stroke="var(--border)" stroke-width="0.5" opacity="0.45"></line>
+                        <text x="{{ svg.fan.fan_chart.plot_x - 8 }}" y="{{ yl.y }}" text-anchor="end" dominant-baseline="central" fill="var(--text-dim)" font-family="DM Mono, monospace" font-size="9">{{ yl.label }}</text>
+                        {% endfor %}
+                        {% for xl in svg.fan.fan_chart.x_labels %}
+                        <line x1="{{ xl.x }}" y1="{{ svg.fan.fan_chart.plot_y }}" x2="{{ xl.x }}" y2="{{ svg.fan.fan_chart.plot_y + svg.fan.fan_chart.plot_h }}" stroke="var(--border)" stroke-width="0.4" opacity="0.25"></line>
+                        <text x="{{ xl.x }}" y="{{ svg.fan.fan_chart.plot_y + svg.fan.fan_chart.plot_h + 18 }}" text-anchor="middle" fill="var(--text-dim)" font-family="DM Mono, monospace" font-size="9">{{ xl.label }}</text>
+                        {% endfor %}
+                        <polyline points="{{ svg.fan.fan_chart.history_points }}" fill="none" stroke="var(--gold)" stroke-width="2.1" stroke-linejoin="round"></polyline>
+                        <circle cx="{{ svg.fan.fan_chart.current_x }}" cy="{{ svg.fan.fan_chart.current_y }}" r="4" fill="var(--gold)"></circle>
+                        {% for series in svg.fan.fan_chart.series %}
+                        <polygon points="{{ series.band_points }}" fill="{{ series.color }}" fill-opacity="{{ series.fill_opacity }}" stroke="none"></polygon>
+                        <polyline points="{{ series.upper_points }}" fill="none" stroke="{{ series.color }}" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.95"></polyline>
+                        <polyline points="{{ series.lower_points }}" fill="none" stroke="{{ series.color }}" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.95"></polyline>
+                        <polyline points="{{ series.median_points }}" fill="none" stroke="{{ series.color }}" stroke-width="2.6" stroke-linejoin="round"></polyline>
+                        <circle cx="{{ series.final_x }}" cy="{{ series.final_median_y }}" r="4" fill="{{ series.color }}"></circle>
+                        <text x="{{ series.final_x }}" y="{{ series.final_median_y }}" dx="10" dy="-8" fill="{{ series.color }}" font-family="DM Mono, monospace" font-size="10">{{ series.label }} {{ series.final_median_label }}</text>
+                        {% endfor %}
+                    </svg>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-item"><span class="legend-dot" style="background:var(--gold)"></span>Gold: recent portfolio history</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#ef7d57"></span>Coral: unhedged, {{ svg.fan.fan_chart.confidence_label }} band</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#52d6be"></span>Teal: hedged, {{ svg.fan.fan_chart.confidence_label }} band</div>
+                </div>
+                <div class="notes" style="margin-top:1rem;">
+                    <div class="note">Starting value: <span class="mono">{{ svg.fan.fan_chart.current_label }}</span>. The gold line ends at `Now`, and the projected ranges begin from that exact same point.</div>
+                    <div class="note">Final {{ svg.fan.fan_chart.confidence_label }} range without hedge: <span class="mono">{{ svg.fan.fan_chart.series[0].final_low_label }}</span> to <span class="mono">{{ svg.fan.fan_chart.series[0].final_high_label }}</span>.</div>
+                    <div class="note">Final {{ svg.fan.fan_chart.confidence_label }} range with hedge: <span class="mono">{{ svg.fan.fan_chart.series[1].final_low_label }}</span> to <span class="mono">{{ svg.fan.fan_chart.series[1].final_high_label }}</span>.</div>
+                </div>
+            </section>
+            {% elif svg.fan.warnings %}
+            <section class="card">
+                <div class="card-title">Portfolio Tunnel Chart</div>
+                <div class="warning-list">
+                    {% for warning in svg.fan.warnings %}
+                    <div class="warning">{{ warning }}</div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+        </div>
+
+        <div class="footer">
+            For planning only. Protective puts can reduce downside, but they also add cost and may not track losses perfectly.
+        </div>
+        <div class="results-meta-footer">
+            {% if recommendation_id %}
+            Recommendation #{{ recommendation_id }} generated at {{ recommendation.timestamp }}
+            {% else %}
+            Analysis generated at {{ recommendation.timestamp }}
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function switchTab(name, btn) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(button => button.classList.remove('active'));
+            document.getElementById('tab-' + name).classList.add('active');
+            btn.classList.add('active');
+        }
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
